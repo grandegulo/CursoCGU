@@ -1,0 +1,24 @@
+Da tabela de pedidos:
+
+Considerar que nem todos os pedidos possuem solicitantes (sigilo)
+Considerar que nem todos os solicitantes são do Brasil
+Considerar que nem todos os solicitantes preencheram todo o cadastro (cidade/profissão)
+Considerar que data.resp como zero (ainda não resp) significa error no excel
+Considerar que existem dados de outros países com municipio e UF do Brasil. (desconsiderar esses numeros)
+
+UF vazias
+39911
+desses 38912 mun vazios tambem
+
+Mun Vazios
+48090
+
+Erros (NA)
+2366
+
+Outros Paises
+4808
+
+
+=SE(Z2="NA";1111111;(SE(Z2="Brasil";(SE(ÉCÉL.VAZIA(AB2);2222222;(PROCV(AB2;DTB_2018_Municipio[[Coluna3]:[Código Município Completo]];3;FALSO))));9999999))
+

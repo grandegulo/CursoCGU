@@ -1,0 +1,25 @@
+
+*Objetivos do Trabalho*
+- verificar a expansão da abrangência do acesso à informação de acordo com os dados do sistema e-SIC da CGU.
+
+*Respostas a apresentar:*
+a)- No mínimo, percentual de municípios onde pelo menos UM habitante já fez uma solicitação de acesso a um órgão público do Poder Executivo Federal
+b)-pedidos por X habitantes
+- Apontar fatores externos que devem ser ponderados e analisados acerca da questão.
+
+*Dados a utilizar:*
+- A proposta é analisar a política de acesso apenas do Poder Executivo Federal. Para isso, sugere-se o uso dos dados do sistema eSIC (FalaBR).
+- A partir do último trimestre de 2018, a CGU implementou no sistema a possibilidade de o solicitante ocultar suas informações no pedido.
+Assim, imagina-se que a parcela de informações ausentes suba nos últimos dois anos.
+
+
+**Carregar os dados**
+-Tabela Completa
+Calcular o numero de pedidos por municipio, por ano, da Tabela Completa
+
+-Ano,Municipio,Pedido
+
+
+
+**Os dados são TODOS de pedidos para Federal?
+**Vai usar dados dos anos em separado?
