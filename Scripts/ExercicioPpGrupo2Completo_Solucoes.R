@@ -1,7 +1,7 @@
-#verificando o diretÛrio atual:
+#verificando o diret√≥rio atual:
 getwd()
 
-#Os dados estar„o em D:/CguData. Vamos alterar o diretÛrio:
+#Os dados estar√£o em D:/CguData. Vamos alterar o diret√≥rio:
 setwd('D:/CguData/PpGrupo2')
 
 #Instalar as bibliotecas
@@ -45,7 +45,7 @@ colnames(TabelaCompleta)
 MunPedAno<-data.frame(TabelaCompleta$IDMunicipio,TabelaCompleta$IdPedido,TabelaCompleta$TipoDemandante,TabelaCompleta$Pais,TabelaCompleta$UF,TabelaCompleta$Municipio,TabelaCompleta$DataRegistro)
 View(MunPedAno)
 
-#Agora vou renomear as colunas, retirando a referÍncia ‡ TabelaCompleta
+#Agora vou renomear as colunas, retirando a refer√™ncia √† TabelaCompleta
 library(dplyr)
 colnames(MunPedAno)
 MunPedAno<-MunPedAno%>% rename( IDMunicipio = TabelaCompleta.IDMunicipio,
@@ -59,9 +59,9 @@ MunPedAno<-MunPedAno%>% rename( IDMunicipio = TabelaCompleta.IDMunicipio,
 
 View(MunPedAno)
 
-#Para agregar os pedidos por ano, precisamos do gr„o "ano"
+#Para agregar os pedidos por ano, precisamos do gr√£o "ano"
 #Vamos Extrair o Ano da Data de Registro
-# Primeiro, verificar que tipo de dado È:
+# Primeiro, verificar que tipo de dado √©:
 class(MunPedAno$DataRegistro)
 
 #importar o pacote stringr
@@ -79,56 +79,56 @@ MunPedAno$DataRegistro<-NULL
 View (MunPedAno)
 colnames(MunPedAno)
 
-#Filtrar sÛ pedidos do Brasil:
+#Filtrar s√≥ pedidos do Brasil:
 library ('dplyr')
 detach ('plyr')
-#H· linhas com Municipio NA e Pais Brasil?
+#H√° linhas com Municipio NA e Pais Brasil?
 #MunPedAno%>% filter(Pais=='Brasil'& Municipio==NA)
 BrasiSemMun<-MunPedAno%>% filter(Pais=='Brasil'& is.na(Municipio))
 library(writexl)
 write_xlsx(BrasiSemMun,"D:\\CguData\\BrasiSemMun_Mun_NA_pais_Brasil.xlsx")
 
-#H· linhas com Municipio diferente de NA  e Pais diferente de Brasil?
+#H√° linhas com Municipio diferente de NA  e Pais diferente de Brasil?
 EstrangComMun<-MunPedAno%>% filter(Pais!='Brasil'& !is.na(Municipio))
-write_xlsx(EstrangComMun,"D:\\CguData\EstrangComMun_Mun_naoNA_pais_Estrangeiro.xlsx")
+write_xlsx(EstrangComMun,"D:\\CguData\\EstrangComMun_Mun_naoNA_pais_Estrangeiro.xlsx")
 
-#Subset com apenas pessoas fÌsicas:
-MunPedAno<-MunPedAno%>% filter(TipoDemandante=='Pessoa FÌsica')
+#Subset com apenas pessoas f√≠sicas:
+MunPedAno<-MunPedAno%>% filter(TipoDemandante=='Pessoa F√≠sica')
 View(MunPedAno)
 
-#Subset desconsiderando pedidos sem municÌpios
+#Subset desconsiderando pedidos sem munic√≠pios
 MunPedAno<-MunPedAno%>% filter(!is.na(Municipio))
 View(MunPedAno)
 
-#subset desconsiderando Estrangeiros sem municÌpios
+#subset desconsiderando Estrangeiros sem munic√≠pios
 MunPedAno<-MunPedAno%>% filter(!is.na(Municipio))
 View(MunPedAno)
 #Nesse Dataset, vamos incluir a populacao
-MunPedAno<-left_join(MunPedAno,PopulacaoIBGE,by = c("IDMunicipio"="CÛd."),copy = FALSE)
+MunPedAno<-left_join(MunPedAno,PopulacaoIBGE,by = c("IDMunicipio"="C√≥d."),copy = FALSE)
 View (MunPedAno)
 
 
 
-#Agora vamos tratamos o dataset remanescente, mas n„o vamos juntar. … preciso depurar a homonÌmia
-#Colocar cÛdigo nos municÌpios que n„o tem cÛdigo informado, cruzando com a tabela de PopulacaoIBGE
-#Os municÌpios que n„o tiverem cÛdigo ser„o descartados
+#Agora vamos tratamos o dataset remanescente, mas n√£o vamos juntar. √â preciso depurar a homon√≠mia
+#Colocar c√≥digo nos munic√≠pios que n√£o tem c√≥digo informado, cruzando com a tabela de PopulacaoIBGE
+#Os munic√≠pios que n√£o tiverem c√≥digo ser√£o descartados
 View(PopulacaoIBGE)
-#O nome de Municipio da Tabela de pedidos est· desacompanhado da UF ...
+#O nome de Municipio da Tabela de pedidos est√° desacompanhado da UF ...
 # O nome de Municipio  da Tabela de Populacao, tem UF (SP)
-#Verificar se h· Municipio sem UF na Tabela de Pedidos:
+#Verificar se h√° Municipio sem UF na Tabela de Pedidos:
 MunSemUf<-MunPedAno%>% filter(is.na(UF))
-#H· 949 Municipios. Vamos normalizar pela Tabela de PopulacaoIBGE
+#H√° 949 Municipios. Vamos normalizar pela Tabela de PopulacaoIBGE
 library(stringr)
 #Com essa biblioteca, vamos criar colunas de UF e Municipio separados
-PopulacaoIBGE['UF']<-str_sub(PopulacaoIBGE$MunicÌpio, start =-4)
-PopulacaoIBGE['Municipio_sem_UF']<-str_extract(PopulacaoIBGE$MunicÌpio,"^[:alpha:].*\\s")
+PopulacaoIBGE['UF']<-str_sub(PopulacaoIBGE$Munic√≠pio, start =-4)
+PopulacaoIBGE['Municipio_sem_UF']<-str_extract(PopulacaoIBGE$Munic√≠pio,"^[:alpha:].*\\s")
 PopulacaoIBGE['Municipio_sem_UF']<-str_trim(PopulacaoIBGE$Municipio_sem_UF)
 View(PopulacaoIBGE)
 View (MunSemUf)
 MunSemUf<-left_join(MunSemUf,PopulacaoIBGE,by = c("Municipio"="Municipio_sem_UF"),copy = FALSE)
 View (MunSemUf)
-#Retirar os parÍnteses da UFy
-# o par‚metro "fixed" È para n„o considerar regex "("
+#Retirar os par√™nteses da UFy
+# o par√¢metro "fixed" √© para n√£o considerar regex "("
 uefe=MunSemUf$UF.y
 uefe= str_replace_all(uefe,fixed("(")," ")
 MunSemUf$UF.y= str_replace_all(uefe,fixed(")")," ")
@@ -141,13 +141,13 @@ MunSemUf<- MunSemUf%>% rename(UF = UF.y)
 MunSemUf<- MunSemUf%>% rename(Populacao = Populacao.y)
 View(MunSemUf)
 
-#A tabela MunPedAno tem uma coluna "MunicÌpio" a mais. Vamos elimin·-la
-Munpedano<-MunPedAno%>% select(-MunicÌpio)
+#A tabela MunPedAno tem uma coluna "Munic√≠pio" a mais. Vamos elimin√°-la
+Munpedano<-MunPedAno%>% select(-Munic√≠pio)
 View(Munpedano)
 
 
-#N„o vamos unir as tabelas. O dataset complementar
-#fica reservado para estudo posterior e depuraÁ„o de falsos positivos
+#N√£o vamos unir as tabelas. O dataset complementar
+#fica reservado para estudo posterior e depura√ß√£o de falsos positivos
 #preparando o dataset:
 #Munpedano<-rbind(Munpedano,MunSemUf)
 #View(Munpedano)
@@ -156,12 +156,12 @@ View(Munpedano)
 ls()
 rm(uefe)
 
-#Dataset completo para an·lises
+#Dataset completo para an√°lises
 #Apagar todas as linhas com pelo menos um "NA" ou "sujeira"
 Munpedano <- na.omit(Munpedano)
 View(Munpedano)
 
-#Vamos inserir o critÈrio de classificaÁ„o pelo nr habitantes
+#Vamos inserir o crit√©rio de classifica√ß√£o pelo nr habitantes
 Munpedano['ClassMunPop']<-Munpedano$Populacao
 Munpedano<-Munpedano%>%
   mutate(ClassMunPop=case_when(Populacao<=15000~'Muito Pequeno',
@@ -183,7 +183,7 @@ write_xlsx(PedAno,"D:\\CguData\\Plan_Respostas\\PedAno_Ped_feitos_Por_Ano_2012_2
 View(PedMunPeriodo)
 View(PedAno)
 
-#quantos pedidos foram feitos no perÌodo 2012-2018 por tamanho de municipio?
+#quantos pedidos foram feitos no per√≠odo 2012-2018 por tamanho de municipio?
 PedMunPeriodo<-Munpedano%>%
   group_by(ClassMunPop)%>%tally()
 PedMunPeriodo <- PedMunPeriodo%>% rename(TotalPedidos = n)
@@ -192,7 +192,7 @@ write_xlsx(PedMunPeriodo,"D:\\CguData\\Plan_Respostas\\PedMunPeriodo_por_tamanho
 View(PedMunPeriodo)
 
 #Em quantos municipios por tipo foram feitos pelo menos UM pedido?
-#Cada linha È um pedido
+#Cada linha √© um pedido
 #Contar distintamente os municipios por tipo
 PedPorClasAno <- Munpedano %>%
   group_by(Ano,ClassMunPop) %>%
@@ -202,8 +202,8 @@ View(PedPorClasAno)
 library("writexl")
 write_xlsx(PedPorClasAno,"D:\\CguData\\Plan_Respostas\\PedClasAno_PeloMenos1Ped_Por_tamanho_por_ano.xlsx")
 
-#Quantos Pedidos foram feitos por ano, por tamanho de municÌpio?
-#Cada linha È um pedido
+#Quantos Pedidos foram feitos por ano, por tamanho de munic√≠pio?
+#Cada linha √© um pedido
 #Contar quantos pedidos por ano, por tamanho de municipio
 PedAnoMunClaspop<-Munpedano%>%
   group_by(Ano,ClassMunPop)%>%
@@ -213,9 +213,9 @@ View(PedAnoMunClaspop)
 write_xlsx(PedAnoMunClaspop,"D:\\CguData\\Plan_Respostas\\PedAnoMunClaspop_Ped_por_ano_por_tamanho_mun.xlsx")
 
 
-#Para saber o percentual dos municÌpios que tiveram pelo menos UM pedido,
-#precisamos saber quantos municÌpios de cada tipo existiam...
-#Vou aplicar a classificaÁ„o que criamos na Tabela PopulacaoIBGE
+#Para saber o percentual dos munic√≠pios que tiveram pelo menos UM pedido,
+#precisamos saber quantos munic√≠pios de cada tipo existiam...
+#Vou aplicar a classifica√ß√£o que criamos na Tabela PopulacaoIBGE
 PopulacaoIBGE['ClassMunPop']<-PopulacaoIBGE$Populacao
 PopulacaoIBGE<-PopulacaoIBGE%>%
   mutate(ClassMunPop=case_when(Populacao<=15000~'Muito Pequeno',
@@ -225,7 +225,7 @@ PopulacaoIBGE<-PopulacaoIBGE%>%
                                T~'Muito Grande'
   ))
 View(PopulacaoIBGE)
-#Quantos municÌpios de cada tipo existem na tabela do IBGE?
+#Quantos munic√≠pios de cada tipo existem na tabela do IBGE?
 QtMunClas<-PopulacaoIBGE%>%
   group_by(ClassMunPop)%>%
   summarise(qtd_municipios=n())
@@ -233,17 +233,17 @@ write_xlsx(QtMunClas,"D:\\CguData\\Plan_Respostas\\QtMunClas_Mun_por_tamanho_Tab
 View(QtMunClas)
 
 #Criar um dataset para resposta percentual:
-#Quantos dos municÌpios "pequenos" e "muito pequenos"
+#Quantos dos munic√≠pios "pequenos" e "muito pequenos"
 #fizeram pelo menos UM pedido?
-#vamos usar a cl·usula "in", como no SQL
+#vamos usar a cl√°usula "in", como no SQL
 PeloMenosUmPedido<-PedPorClasAno%>%
   filter(ClassMunPop%in%c("Muito Pequeno","Pequeno"))
 View(PeloMenosUmPedido)
 
-#Calcular o percentual de municÌpios q tiveram pelo menos um pedido:
+#Calcular o percentual de munic√≠pios q tiveram pelo menos um pedido:
 #Existem 3250 municipios muito pequenos e 1643 pequenos
-#Qual o percentual de municÌpios, em raz„o do total
-#de municÌpios por tipo, fizeram pelo menos um pedido?
+#Qual o percentual de munic√≠pios, em raz√£o do total
+#de munic√≠pios por tipo, fizeram pelo menos um pedido?
 categoria=PeloMenosUmPedido$ClassMunPop
 valor=PeloMenosUmPedido$Pedidos
 PeloMenosUmPedido['% MunComPedido']<-case_when(
@@ -253,8 +253,8 @@ categoria=="Muito Pequeno"~signif(valor/3250*100,4),
 View(PeloMenosUmPedido)
 write_xlsx(PeloMenosUmPedido,"D:\\CguData\\Plan_Respostas\\PeloMenosUmPedido_Percentual_em_relac_qt_mun_do_tipo_Pelo_menos_1_pedido.xlsx")
 
-#Qual a relaÁ„o pedidos/habitante, considerando
-#os municÌpios "pequenos" e "muito pequenos"?
+#Qual a rela√ß√£o pedidos/habitante, considerando
+#os munic√≠pios "pequenos" e "muito pequenos"?
 #Vamos montar um dataset para essa resposta:
 PedPorHab<-Munpedano%>%
   filter(ClassMunPop%in%c("Muito Pequeno","Pequeno"))
